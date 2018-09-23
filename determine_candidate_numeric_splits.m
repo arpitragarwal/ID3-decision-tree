@@ -19,5 +19,6 @@ for i = 2:length(sorted_attribute_values)
         splits = [splits, split_value];
     end
 end
+splits = [splits, max(attribute_values)];
 end
 

@@ -14,7 +14,7 @@ end
 
 probabilities = number_of_labels_per_value/number_of_data_points;
 entropies = -1 * probabilities.*log(probabilities)/log(2);
-
+entropies(isnan(entropies)) = 0;
 entropy = sum(entropies);
 
 end

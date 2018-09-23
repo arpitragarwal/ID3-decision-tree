@@ -19,12 +19,12 @@ if is_curr_attribute_numeric
         curr_value = numeric_attribute_values(i);
         for j = 1:length(numeric_split_values)
             if(curr_value <= numeric_split_values(j))
-                if(~strcmp(children_data_sets(j).data{1, end}, ''))
+                if(strcmp(children_data_sets(j).data{1, end}, ''))
+                    children_data_sets(j).data = data(i, :);
+                else
                     curr_size_of_child_set = length(children_data_sets(j).data(:, 1));
                     data_point_number = curr_size_of_child_set + 1;
                     children_data_sets(j).data(data_point_number, :) = data(i, :);
-                else
-                    children_data_sets(j).data = data(i, :);
                 end
                 break
             end
