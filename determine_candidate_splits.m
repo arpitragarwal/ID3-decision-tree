@@ -1,4 +1,4 @@
-function [splits] = determineCandidateSplits(data, metadata)
+function [splits] = determine_candidate_splits(data, metadata)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,7 @@ is_attribute_numeric = metadata.is_attribute_numeric;
 n_attributes = length(data(1,:));
 for i = 1:n_attributes
     if is_attribute_numeric(i)
-        splits{i} = determineCandidateNumericSplits(data, i);
+        splits{i} = determine_candidate_numeric_splits(data, i);
     else
         unique_values{i} = unique(data(:, i));
         for j = 1:length(unique_values{i})

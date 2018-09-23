@@ -1,4 +1,4 @@
-function splits = determineCandidateNumericSplits(data, attribute_number)
+function splits = determine_candidate_numeric_splits(data, attribute_number)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 
