@@ -1,0 +1,21 @@
+@relation play-tennis
+@attribute 'outlook' { Sunny, Overcast, Rain}
+@attribute 'temperature' { Hot, Cool, Mild}
+@attribute 'humidity' { High, Normal}
+@attribute 'wind' { Weak, Strong}
+@attribute 'class' { negative, positive}
+@data
+Sunny,Hot,High,Weak,negative
+Sunny,Hot,High,Strong,negative
+Overcast,Hot,High,Weak,positive
+Rain,Mild,High,Weak,positive
+Rain,Cool,Normal,Weak,positive
+Rain,Cool,Normal,Strong,negative
+Overcast,Cool,Normal,Strong,positive
+Sunny,Mild,High,Weak,negative
+Sunny,Cool,Normal,Weak,positive
+Rain,Mild,Normal,Weak,positive
+Sunny,Mild,Normal,Strong,positive
+Overcast,Mild,High,Strong,positive
+Overcsat,Hot,Normal,Weak,positive
+Rain,Mild,High,Strong,negative
