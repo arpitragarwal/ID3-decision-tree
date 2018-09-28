@@ -17,5 +17,5 @@ Sunny,Cool,Normal,Weak,positive
 Rain,Mild,Normal,Weak,positive
 Sunny,Mild,Normal,Strong,positive
 Overcast,Mild,High,Strong,positive
-Overcsat,Hot,Normal,Weak,positive
+Overcast,Hot,Normal,Weak,positive
 Rain,Mild,High,Strong,negative
