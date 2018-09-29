@@ -36,16 +36,18 @@ classdef TreeNode < handle
         end
         
         function determine_class_label(obj)
+            %TODO 1. need to add functionality for equal number of class
+            %labels. 2. need to add functionality for 0 datapoints reaching
+            %leaf node
             class_labels = obj.data(:, end);
             unique_class_labels = obj.metadata.attribute_values{end};
             [~, label_index] = max(obj.label_count);
             obj.class_label = unique_class_labels{label_index};
         end
         
-        function are_criteria_met = are_stopping_criteria_met(obj)
+        function are_criteria_met = are_stopping_criteria_met(obj, m)
             class_labels = obj.data(:, end);
             unique_class_values = unique(class_labels);
-            m = 1;
             if (length(class_labels) < m)
                 obj.is_leaf = true;
             elseif (length(unique_class_values)<=1)
@@ -77,11 +79,11 @@ classdef TreeNode < handle
             [~, obj.split_attribute_no] = max(obj.gain(1:end - 1));
         end
         
-        function populate_children(obj)
+        function populate_children(obj, m)
             children_data_sets = split_data_sets(obj.data, obj.metadata,...
                 obj.splits, obj.split_attribute_no);
             for i = 1:length(children_data_sets)
-                obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata);
+                obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata, m);
             end
         end
     end
