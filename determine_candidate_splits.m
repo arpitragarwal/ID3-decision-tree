@@ -4,9 +4,15 @@ function [splits] = determine_candidate_splits(data, metadata)
 
 is_attribute_numeric = metadata.is_attribute_numeric;
 n_attributes = length(data(1,:));
+
 for i = 1:n_attributes
     if is_attribute_numeric(i)
-        splits{i} = determine_candidate_numeric_splits(data, i);
+        % check for empty dataset
+        if (isempty(data{1,1}))
+            splits{i} = [];
+        else
+            splits{i} = determine_candidate_numeric_splits(data, i);
+        end
     else
         unique_values{i} = unique(data(:, i));
         for j = 1:length(unique_values{i})

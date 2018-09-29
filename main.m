@@ -1,8 +1,8 @@
 clear; clc; close all; format compact;
 
-filename = 'data/play_tennis.arff.txt';
+filename = 'data/heart_train.arff.txt';
 [data, metadata] = read_arff_file(filename);
 fclose all;
 
-m = 4;
+m = 20;
 tree = make_subtree(data, metadata, m);

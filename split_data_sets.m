@@ -1,6 +1,5 @@
 function children_data_sets = split_data_sets(data, metadata, splits, attribute_number)
-%UNTITLED5 Summary of this function goes here
-%   Detailed explanation goes here
+
 attribute_values = data(:, attribute_number);
 is_curr_attribute_numeric = metadata.is_attribute_numeric(attribute_number);
 
@@ -10,6 +9,7 @@ end
 
 if is_curr_attribute_numeric
     % numeric attribute values
+    % TODO FIX BUG HERE: THE DATA SPLITS ARE INCORRECT
     for i = 1:length(attribute_values)
         numeric_attribute_values(i) = str2num(attribute_values{i});
     end

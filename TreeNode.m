@@ -12,6 +12,7 @@ classdef TreeNode < handle
         is_leaf = false;
         class_label
         label_count
+        splitting_value_index = -1;
     end
     
     methods
@@ -72,16 +73,36 @@ classdef TreeNode < handle
         function find_best_split(obj)
             %METHOD1 Summary of this method goes here
             %   Detailed explanation goes here
-            for i = 1:length(obj.metadata.attribute_names)
-                attribute_number = i;
-                obj.gain(i) = info_gain(obj.data, obj.metadata, obj.splits, attribute_number);
+            for attribute_number = 1:length(obj.metadata.attribute_names)
+                [obj.gain(attribute_number), obj.splitting_value_index]= ...
+                    info_gain(obj.data, obj.metadata, obj.splits, attribute_number);
             end
             [~, obj.split_attribute_no] = max(obj.gain(1:end - 1));
         end
         
         function populate_children(obj, m)
-            children_data_sets = split_data_sets(obj.data, obj.metadata,...
-                obj.splits, obj.split_attribute_no);
+            are_attributes_numeric = obj.metadata.is_attribute_numeric;
+            if ~are_attributes_numeric(obj.split_attribute_no) % Non numerical features
+                children_data_sets = split_data_sets(obj.data, obj.metadata,...
+                    obj.splits, obj.split_attribute_no);
+            else
+                all_possible_child_data_sets = split_data_sets(obj.data, obj.metadata,...
+                    obj.splits, obj.split_attribute_no);
+                
+                % construct the correct 2 children data sets here
+                children_data_sets(1).data = repmat({''}, 1, length(obj.data(1, :)));
+                children_data_sets(2).data = repmat({''}, 1, length(obj.data(1, :)));
+                
+                for j = 1:length(all_possible_child_data_sets)
+                    if j <= obj.splitting_value_index
+                        children_data_sets(1).data  = ...
+                            combine_data_sets(children_data_sets(1).data, all_possible_child_data_sets(j).data);
+                    else
+                        children_data_sets(2).data =...
+                            combine_data_sets(children_data_sets(2).data, all_possible_child_data_sets(j).data);
+                    end
+                end
+            end
             for i = 1:length(children_data_sets)
                 obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata, m);
             end
