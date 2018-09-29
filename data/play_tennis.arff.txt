@@ -3,7 +3,7 @@
 @attribute 'temperature' { Hot, Cool, Mild}
 @attribute 'humidity' { High, Normal}
 @attribute 'wind' { Weak, Strong}
-@attribute 'class' { negative, positive}
+@attribute 'class' { positive, negative}
 @data
 Sunny,Hot,High,Weak,negative
 Sunny,Hot,High,Strong,negative
