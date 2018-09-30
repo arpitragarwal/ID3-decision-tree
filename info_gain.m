@@ -37,10 +37,10 @@ else
     for i = 1:length(children_data_sets) - 1
         % construct binary splits based on children data sets provided
         clearvars left_child_set right_child_set
-        for k = 1:length(splits{attribute_number})
-            left_child_set = repmat({''}, 1, length(data(1, :)));
-            right_child_set = repmat({''}, 1, length(data(1, :)));
-        end
+
+        left_child_set = repmat({''}, 1, length(data(1, :)));
+        right_child_set = repmat({''}, 1, length(data(1, :)));
+
         for j = 1:length(children_data_sets)
             if j <= i
                 left_child_set  = ...

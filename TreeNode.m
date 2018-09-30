@@ -12,7 +12,7 @@ classdef TreeNode < handle
         is_leaf = false;
         class_label
         label_count
-        splitting_value_index = -1;
+        splitting_value_index = [];
     end
     
     methods
@@ -74,7 +74,7 @@ classdef TreeNode < handle
             %METHOD1 Summary of this method goes here
             %   Detailed explanation goes here
             for attribute_number = 1:length(obj.metadata.attribute_names)
-                [obj.gain(attribute_number), obj.splitting_value_index]= ...
+                [obj.gain(attribute_number), obj.splitting_value_index(attribute_number)]= ...
                     info_gain(obj.data, obj.metadata, obj.splits, attribute_number);
             end
             [~, obj.split_attribute_no] = max(obj.gain(1:end - 1));
@@ -94,7 +94,7 @@ classdef TreeNode < handle
                 children_data_sets(2).data = repmat({''}, 1, length(obj.data(1, :)));
                 
                 for j = 1:length(all_possible_child_data_sets)
-                    if j <= obj.splitting_value_index
+                    if j <= obj.splitting_value_index(obj.split_attribute_no)
                         children_data_sets(1).data  = ...
                             combine_data_sets(children_data_sets(1).data, all_possible_child_data_sets(j).data);
                     else
