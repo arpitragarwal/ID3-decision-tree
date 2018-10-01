@@ -6,6 +6,8 @@ classdef TreeNode < handle
         data
         metadata
         split_attribute_no
+        split_attribute_name
+        children_labels
         children TreeNode;
         splits
         gain = [];
@@ -78,6 +80,7 @@ classdef TreeNode < handle
                     info_gain(obj.data, obj.metadata, obj.splits, attribute_number);
             end
             [~, obj.split_attribute_no] = max(obj.gain(1:end - 1));
+            obj.split_attribute_name = obj.metadata.attribute_names{obj.split_attribute_no};
         end
         
         function populate_children(obj, m)
@@ -103,8 +106,29 @@ classdef TreeNode < handle
                     end
                 end
             end
+            obj.children_labels = obj.metadata.attribute_values{obj.split_attribute_no};
             for i = 1:length(children_data_sets)
                 obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata, m);
+            end
+        end
+
+        function label = find_correct_child(obj, test_data_point)
+            if obj.is_leaf
+                label = obj.class_label;
+            elseif ~obj.metadata.is_attribute_numeric(obj.split_attribute_no) % Non Numeric Attribute
+                child_number = find(strcmp(test_data_point{obj.split_attribute_no}, obj.children_labels));
+                label = obj.children(child_number).find_correct_child(test_data_point);
+            else % Numeric Attribute
+                possible_splits_for_attribute = obj.splits{obj.split_attribute_no};
+                split_value = possible_splits_for_attribute(obj.splitting_value_index(obj.split_attribute_no));
+                test_attribute_value = str2num(test_data_point{obj.split_attribute_no});
+                if (test_attribute_value <= split_value)
+                    % here we just have 2 children - less than value and
+                    % more than value
+                    label = obj.children(1).find_correct_child(test_data_point);
+                else
+                    label = obj.children(2).find_correct_child(test_data_point);
+                end
             end
         end
     end
