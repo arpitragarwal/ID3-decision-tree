@@ -15,7 +15,7 @@ for i = 1:length(text{1,1})
         data_start_index = i + 1;
     end
     
-    if (strcmp(text{1,1}{i},'real'))
+    if (strcmp(text{1,1}{i},'real') || strcmp(text{1,1}{i},'numeric'))
         is_attribute_numeric(n_attributes) = 1;
     end
 end
