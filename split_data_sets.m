@@ -32,9 +32,12 @@ if is_curr_attribute_numeric
     end
 else
     %non numeric attribute
+    n_children = length(splits{attribute_number});
+    % initialize empty children datasets
+    children_data_sets(n_children).data = repmat({''}, 1, length(data(1, :)));
     for i = 1:length(attribute_values)
         curr_value = attribute_values{i};
-        for j = 1:length(splits{attribute_number})
+        for j = 1:n_children
             if(strcmp(curr_value, splits{attribute_number}{j}))
                 if(~strcmp(children_data_sets(j).data{1, end}, ''))
                     curr_size_of_child_set = length(children_data_sets(j).data(:, 1));
