@@ -15,6 +15,7 @@ end
 number_correctly_classified = sum(is_predict_correct);
 total_no_of_test_instances = length(test_data(:, 1));
 
+disp('<Predictions for the Test Set Instances>');
 for i = 1:length(test_data(:, 1))
     disp([num2str(i), ': Actual: ', test_data{i, end}, ' Predicted: ', predicted_label{i}]);
 end
