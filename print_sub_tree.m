@@ -21,8 +21,9 @@ for i = 1:n_children
                 sign = ' > ';
             end
             split_value = node.splits{node.split_attribute_no}(node.splitting_value_index(node.split_attribute_no));
-            split_val_str = num2str(split_value);
-            disp([pre_string, node.split_attribute_name, sign, split_val_str])
+            split_val_str = num2str(split_value, '%3f');
+            disp([pre_string, node.split_attribute_name, sign, split_val_str, ...
+                ' : ', child_i.class_label])
         else
             disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}, ...
                 ' : ', child_i.class_label])
@@ -36,7 +37,7 @@ for i = 1:n_children
                 sign = ' > ';
             end
             split_value = node.splits{node.split_attribute_no}(node.splitting_value_index(node.split_attribute_no));
-            split_val_str = num2str(split_value);
+            split_val_str = num2str(split_value, '%3f');
             disp([pre_string, node.split_attribute_name, sign, split_val_str])
         else
             disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}])
