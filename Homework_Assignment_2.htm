@@ -1,0 +1,130 @@
+<html class="gr__biostat_wisc_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Homework Assignment #2</title>
+</head>
+
+<body data-gr-c-s-loaded="true"><h2>Homework Assignment #2<br>
+</h2>
+
+<h3>Grade points are evenly divided among the following parts of the homework.</h3>
+
+<h3>Part 1</h3>
+
+
+For this part of the homework, you are to implement an ID3-like decision-tree
+learner for classification. 
+<p>
+
+Your program should read files that are in the <a href="http://weka.wikispaces.com/ARFF+%28stable+version%29">ARFF</a> format.  In
+this format, each instance is described on a single line.  The feature
+values are separated by commas, and the last value on each line is the
+class label of the instance.  
+Each ARFF file starts with a header section describing the features and the class labels.
+Lines starting with '%' are comments.
+See the link above for a brief, but more detailed description of the ARFF format.
+Your program should handle numeric and nominal attributes, and simple ARFF files (i.e. don't worry about sparse ARFF files and instance weights).
+Example ARFF files are provided below.
+</p><p>
+
+Your program can assume that (i) the class attribute is binary,
+(ii) it is named 'class', and (iii) it is the last attribute listed in
+the header section.
+</p><p>
+
+Your program should implement a decision-learner according to the following guidelines:
+</p><ul>
+<li> Candidate splits for nominal features should have one branch per value of the nominal feature.  The branches should be ordered according to the order of the feature values listed in the ARFF file.
+</li><li> Candidate splits for numeric features should use thresholds that are midpoints betweeen values in the given set of instances.  The left branch of such a split should represent values that are less than or equal to the threshold.
+</li><li> Splits should be chosen using information gain. If there is a tie between two features in their information gain, you should break the tie in favor of the feature listed first in the header section of the ARFF file.  If there is a tie between two different thresholds for a numeric feature, you should break the tie in favor of the smaller threshold.
+</li><li> The stopping criteria (for making a node into a leaf) are that (i) all of the training instances reaching the node belong to the same class,  or (ii) there are fewer than <code>m</code> training instances reaching the node, where <code>m</code> is provided as input to the program, or (iii) no feature has positive information gain, or (iv) there are no more remaining candidate splits at the node.
+</li><li> If the classes of the training instances reaching a leaf are equally represented, the leaf should predict the most common class of instances reaching the parent node.
+</li><li> If the number of training instances that reach a leaf node is 0, the leaf should predict the most common class of instances reaching the parent node.
+</li></ul>
+
+Your program should be callable from the command line.
+It should be named <code>dt-learn</code> and should accept three
+command-line arguments as follows:<br> <code>dt-learn
+&lt;train-set-file&gt; &lt;test-set-file&gt; m</code><br> If you are using
+a language that is not compiled to machine code (e.g. Java), then you
+should make a small script called <code>dt-learn</code> that accepts the
+command-line arguments and invokes the appropriate source-code program
+and interpreter.
+<p>
+Here are <a href="./SampleScripts/">examples of such scripts</a>.
+</p><p>
+
+As output, your program should print the tree learned from the training set and its predictions
+for the test-set instances.
+For each instance in the test set, your program should print one line
+of output with spaces separating the fields.  Each output line should
+list the 
+predicted class label, and actual class label.  
+This should be followed by a line listing the number of correctly classified test instances, and the total number of instances in the test set.
+</p><p>
+Here are the trees and test-set classifications that your code should produce when given <a href="./heart/heart_train.arff">heart_train.arff</a> as the training set and <b><a href="./heart/heart_test.arff">heart_test.arff</a> as the test set</b>.
+</p><ul> 
+<li><a href="./heart/m=2.txt">m = 2</a>
+</li><li> <a href="./heart/m=4.txt">m = 4</a>
+</li><li> <a href="./heart/m=10.txt">m = 10</a>
+</li><li> <a href="./heart/m=20.txt">m = 20</a>
+</li></ul>
+Here are the trees and test-set classifications that your code should produce when given <a href="./diabetes/diabetes_train.arff">diabetes_train.arff</a> as the training set <b><a href="./diabetes/diabetes_test.arff">diabetes_test.arff</a> as the test set</b>
+.
+<ul> 
+<li><a href="./diabetes/m=2.txt">m = 2</a>
+</li><li> <a href="./diabetes/m=4.txt">m = 4</a>
+</li><li> <a href="./diabetes/m=10.txt">m = 10</a>
+</li><li> <a href="./diabetes/m=20.txt">m = 20</a>
+</li></ul>
+It is optional to print the number of training instances of each class after each node.
+<p>
+
+</p><h3>Part 2</h3>
+
+For this part, you will plot <em>learning curves</em> that characterize the predictive accuracy of your learned trees as a function of the training set size.
+You will do this in two problem domains.  The first data set involves predicting the presence or absence of heart disease.
+For this problem domain,
+you should use <a href="./heart/heart_train.arff">heart_train.arff</a> as your training set and
+<a href="./heart_test.arff">heart_test.arff</a> as your test set.
+The second data set involves predicting whether a patient has diabetes or not.
+For this problem domain,
+you should use <a href="./diabetes/diabetes_train.arff">diabetes_train.arff</a> as your training set and
+<a href="./diabetes/diabetes_test.arff">diabetes_test.arff</a> as your test set.
+<p>
+You should plot
+points for training set sizes that represent 5%, 10%, 20%, 50% and 100% of the instances in each given training file.  For
+each training-set size (except the largest one), randomly draw 10 different training sets
+and evaluate
+each resulting decision tree model on the test set.  For each training set
+size, plot the average test-set accuracy and the minimum and maximum
+test-set accuracy.  Be sure to label the axes of your plots.
+Set the stopping criterion <code>m=4</code> for these experiments.
+</p><p>
+
+</p><h3>Part 3</h3>
+
+For this part, you will investigate how predictive accuracy varies as a function of tree size.
+For both of the data sets considered in Part 2, you should learn trees using the entire training set.
+Plot curves showing how test-set accuracy
+varies with the value <code>m</code> used in the stopping criteria.  Show points for <code>m</code> = 2, 5, 10 and 20.
+Be sure to label the axes of your plots.
+
+
+</p><h3>Part 4</h3>
+
+This part consists of some written exercises. Download from <a href="written/hw2_written.pdf">here</a>. You can use <a href="written/hw2_written.tex">this latex template</a> to write your solution.
+
+
+
+
+<h3>Submitting Your Work</h3>
+
+You should turn in your work electronically using the Canvas course management system.
+Turn in all source files and your runnable program as well as a
+file called hw2.pdf that shows your work for Parts 2, 3, and 4. 
+All files should be compressed as one zip file named <code>&lt;Wisc username&gt;_hw2.zip</code>.
+Upload this zip file as Homework #2 at the course Canvas site.
+<br>
+<br>
+
+
+</body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
