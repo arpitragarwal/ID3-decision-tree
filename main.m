@@ -6,7 +6,7 @@ filename = 'data/heart_train.arff.txt';
 fclose all;
 
 m = 20;
-tree = make_subtree(training_data, training_metadata, m);
+tree = make_subtree(training_data, training_metadata, m, [0 0]);
 
 %%
 test_filename = 'data/heart_test.arff.txt';
@@ -17,5 +17,6 @@ fclose all;
 %%
 clc;
 print_sub_tree(tree, 0);
+%%
 [number_correctly_classified, total_no_of_test_instances] = ...
     make_predictions(test_data, tree);

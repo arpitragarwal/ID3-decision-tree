@@ -14,15 +14,17 @@ classdef TreeNode < handle
         is_leaf = false;
         class_label
         label_count
+        parent_label_count
         splitting_value_index = [];
     end
     
     methods
-        function obj = TreeNode(data, metadata)
+        function obj = TreeNode(data, metadata, parent_label_count)
             %UNTITLED Construct an instance of this class
             %   Detailed explanation goes here
             obj.data = data;
             obj.metadata = metadata;
+            obj.parent_label_count = parent_label_count;
         end
         
         function determine_candidate_splits(obj)
@@ -39,12 +41,21 @@ classdef TreeNode < handle
         end
         
         function determine_class_label(obj)
-            %TODO 1. need to add functionality for equal number of class
-            %labels. 2. need to add functionality for 0 datapoints reaching
-            %leaf node
             class_labels = obj.data(:, end);
             unique_class_labels = obj.metadata.attribute_values{end};
-            [~, label_index] = max(obj.label_count);
+            max_value_locations = (obj.label_count == max(obj.label_count));
+            if isempty(obj.data)
+                % no data points have reached leaf. Class label needs to be
+                % determined from parent node
+                [~, label_index] = max(obj.parent_label_count);
+            elseif sum(max_value_locations) > 1
+                % multiple labels appear the same (max) number of times
+                % the class label cannot be determined uniquely based on
+                % this. Parent node needs to be checked for class label
+                [~, label_index] = max(obj.parent_label_count);
+            else
+                [~, label_index] = max(obj.label_count);
+            end
             obj.class_label = unique_class_labels{label_index};
         end
         
@@ -108,7 +119,7 @@ classdef TreeNode < handle
             end
             obj.children_labels = obj.metadata.attribute_values{obj.split_attribute_no};
             for i = 1:length(children_data_sets)
-                obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata, m);
+                obj.children(i) = make_subtree(children_data_sets(i).data, obj.metadata, m, obj.label_count);
             end
         end
 
