@@ -15,8 +15,11 @@ splits = [];
 for i = 2:length(sorted_attribute_values)
     if(strcmp(sorted_class_values(i - 1), sorted_class_values(i)))
     else
-        split_value = 0.5 * (sorted_attribute_values(i - 1) + sorted_attribute_values(i));
-        splits = [splits, split_value];
+        if(sorted_attribute_values(i-1) == sorted_attribute_values(i))
+        else
+            split_value = 0.5 * (sorted_attribute_values(i - 1) + sorted_attribute_values(i));
+            splits = [splits, split_value];
+        end
     end
 end
 splits = [splits, max(attribute_values)];
