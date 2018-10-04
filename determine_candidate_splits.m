@@ -14,15 +14,7 @@ for i = 1:n_attributes
             splits{i} = determine_candidate_numeric_splits(data, i);
         end
     else
-        unique_values{i} = unique(data(:, i));
-        for j = 1:length(unique_values{i})
-            for k = 1:length(metadata.attribute_values{i})
-                string_to_check = metadata.attribute_values{i}{k};
-                if any(strcmp(unique_values{i}, string_to_check))
-                    splits{i}{k} = string_to_check;
-                end
-            end
-        end
+        splits{i} = metadata.attribute_values{i};
     end
 end
 
