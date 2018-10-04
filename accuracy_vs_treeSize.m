@@ -12,7 +12,7 @@ fclose all;
 m_values = [2, 5, 10, 20];
 for i = 1:length(m_values)
     m = m_values(i);
-    tree = make_subtree(training_data, training_metadata, m);
+    tree = make_subtree(training_data, training_metadata, m, [0 0]);
     [number_correctly_classified(i), total_no_of_test_instances] = ...
         make_predictions(test_data, tree);
 end
