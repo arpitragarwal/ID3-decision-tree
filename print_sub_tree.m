@@ -23,9 +23,11 @@ for i = 1:n_children
             split_value = node.splits{node.split_attribute_no}(node.splitting_value_index(node.split_attribute_no));
             split_val_str = num2str(split_value, '%3f');
             disp([pre_string, node.split_attribute_name, sign, split_val_str, ...
+                ' [', num2str(child_i.label_count(1)), ' ', num2str(child_i.label_count(2)), ']' ...
                 ' : ', child_i.class_label])
         else
             disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}, ...
+                ' [', num2str(child_i.label_count(1)), ' ', num2str(child_i.label_count(2)), ']' ...
                 ' : ', child_i.class_label])
         end
     else
@@ -38,9 +40,11 @@ for i = 1:n_children
             end
             split_value = node.splits{node.split_attribute_no}(node.splitting_value_index(node.split_attribute_no));
             split_val_str = num2str(split_value, '%3f');
-            disp([pre_string, node.split_attribute_name, sign, split_val_str])
+            disp([pre_string, node.split_attribute_name, sign, split_val_str, ...
+                ' [', num2str(node.children(i).label_count(1)), ' ', num2str(node.children(i).label_count(2)), ']' ])
         else
-            disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}])
+            disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}, ...
+                ' [', num2str(node.children(i).label_count(1)), ' ', num2str(node.children(i).label_count(2)), ']' ])
         end
         print_sub_tree(child_i, level + 1)
     end
