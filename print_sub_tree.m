@@ -4,7 +4,7 @@ function print_sub_tree(node, level)
 
 pre_string = '';
 for i = 1:level
-    pre_string = [pre_string, '|    '];
+    pre_string = [pre_string, '|       '];
 end
 
 isnumeric = node.metadata.is_attribute_numeric(node.split_attribute_no);
@@ -24,11 +24,11 @@ for i = 1:n_children
             split_val_str = num2str(split_value, '%3f');
             disp([pre_string, node.split_attribute_name, sign, split_val_str, ...
                 ' [', num2str(child_i.label_count(1)), ' ', num2str(child_i.label_count(2)), ']' ...
-                ' : ', child_i.class_label])
+                ': ', child_i.class_label])
         else
             disp([pre_string, node.split_attribute_name, ' = ', node.children_labels{i}, ...
                 ' [', num2str(child_i.label_count(1)), ' ', num2str(child_i.label_count(2)), ']' ...
-                ' : ', child_i.class_label])
+                ': ', child_i.class_label])
         end
     else
         % if this child is NOT a leaf then print subtree
